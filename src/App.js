@@ -29,6 +29,15 @@ function App() {
       </select>
       <button onClick={addExperiment}>Добавить</button>
       </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
+        {experiments.map(exp => (
+          <div key={exp.id} style={{ border: '1px solid #ccc', borderRadius: 12, padding: 10 }}>
+            <strong>{exp.name}</strong>
+            <br />
+            <small>Статус: {exp.status}</small>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
