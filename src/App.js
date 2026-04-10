@@ -4,6 +4,7 @@ function App() {
   const [experiments, setExperiments] = useState([]);
   const [newName, setNewName] = useState('');
   const [newStatus, setNewStatus] = useState('План');
+  const [filterStatus, setFilterStatus] = useState('Все');
 
   const addExperiment = () => {
     if (newName.trim() === '') return;
@@ -16,6 +17,10 @@ function App() {
     setNewName('');
     setNewStatus('План');
   };
+
+  const filtered = filterStatus === 'Все' 
+  ? experiments 
+  : experiments.filter(e => e.status === filterStatus);
 
   return (
     <div style={{ padding: 20 }}>
@@ -37,8 +42,18 @@ function App() {
         <button onClick={addExperiment}>Добавить</button>
       </div>
 
+      <div style={{ border: '1px solid #ccc', padding: 10, marginBottom: 20 }}>
+        <h3>Фильтр по статусу</h3>
+        <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}>
+          <option>Все</option>
+          <option>План</option>
+          <option>В процессе</option>
+          <option>Завершён</option>
+        </select>
+      </div>
+
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
-        {experiments.map(exp => (
+        {filtered.map(exp => (
           <div key={exp.id} style={{ border: '1px solid #ccc', borderRadius: 12, padding: 10 }}>
             <strong>{exp.name}</strong>
             <br />
