@@ -1,7 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function App() {
-  const [experiments, setExperiments] = useState([]);
+  const [experiments, setExperiments] = useState(() => {
+    const saved = localStorage.getItem('experiments');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        return [];
+      }
+    }
+    return [];
+  });
+
   const [newName, setNewName] = useState('');
   const [newStatus, setNewStatus] = useState('План');
   const [filterStatus, setFilterStatus] = useState('Все');
@@ -13,14 +24,18 @@ function App() {
       name: newName,
       status: newStatus,
     };
-    setExperiments([...experiments, newExp]);
+    setExperiments(prev => [...prev, newExp]);
     setNewName('');
     setNewStatus('План');
   };
 
-  const filtered = filterStatus === 'Все' 
-  ? experiments 
-  : experiments.filter(e => e.status === filterStatus);
+  const filtered = (filterStatus === 'Все' 
+    ? experiments   
+    : experiments.filter(e => e.status === filterStatus));
+
+  useEffect(() => {
+    localStorage.setItem('experiments', JSON.stringify(experiments));
+  }, [experiments]);
 
   return (
     <div style={{ padding: 20 }}>
