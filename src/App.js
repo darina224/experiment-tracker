@@ -27,6 +27,12 @@ function App() {
       <h1>Учёт экспериментов</h1>
 
       <div style={{ border: '1px solid #ccc', padding: 10, marginBottom: 20 }}>
+        <strong>Завершённых экспериментов: {
+          experiments.filter(e => e.status === 'Завершён').length
+        }</strong>
+      </div>
+
+      <div style={{ border: '1px solid #ccc', padding: 10, marginBottom: 20 }}>
         <h3>Добавить эксперимент</h3>
         <input
           type="text"
