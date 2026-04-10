@@ -4,6 +4,17 @@ function App() {
   const [experiments, setExperiments] = useState([]);
   const [newName, setNewName] = useState('');
   const [newStatus, setNewStatus] = useState('План');
+  const addExperiment = () => {
+    if (newName.trim() === '') return;
+    const newExp = {
+      id: Date.now(),
+      name: newName,
+      status: newStatus,
+    };
+    setExperiments([...experiments, newExp]);
+    setNewName('');
+    setNewStatus('План');
+  };
 
   return (
     <div style={{ padding: 20 }}>
@@ -16,7 +27,7 @@ function App() {
           <option>В процессе</option>
           <option>Завершён</option>
       </select>
-      <button>Добавить</button>
+      <button onClick={addExperiment}>Добавить</button>
       </div>
     </div>
   );
