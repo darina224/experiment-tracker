@@ -35,6 +35,11 @@ function App() {
             <strong>{exp.name}</strong>
             <br />
             <small>Статус: {exp.status}</small>
+            <button onClick={() => {
+              setExperiments(experiments.filter(e => e.id !== exp.id));
+            }}>
+              Удалить
+            </button>
           </div>
         ))}
       </div>
